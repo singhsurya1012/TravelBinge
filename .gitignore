@@ -23,3 +23,6 @@
 hs_err_pid*
 
 .metadata/
+.mvn/
+mvnw
+mvnw.cmd
