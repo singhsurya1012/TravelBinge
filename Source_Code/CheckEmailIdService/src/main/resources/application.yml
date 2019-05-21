@@ -1,0 +1,43 @@
+---
+
+server:
+  port: 8100
+  servlet:
+    context-path: /travelBinge
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8010/eureka
+  
+spring:
+  application:
+    name: check-email-service
+  datasource:
+    hikari:
+      connectionTimeout: 30000
+      idleTimeout: 30000
+      maxLifetime: 2000000
+      maximumPoolSize: 20
+      minimumIdle: 5
+      poolName: SpringBootJPAHikariCP
+    initialization-mode: always
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/travelbinge?searchpath=MainSchema
+    username: surya
+    password: Surya123
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+      ddl-auto: none  
+      
+logging:
+  level:
+    com:
+      zaxxer:
+        hikari:
+          HikariConfig: DEBUG
+
+
