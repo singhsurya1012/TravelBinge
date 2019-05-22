@@ -4,6 +4,9 @@ server:
   port: 8100
   servlet:
     context-path: /travelBinge
+  error: 
+    whitelabel: 
+      enabled: false
 
 eureka:
   client:
@@ -11,8 +14,8 @@ eureka:
       defaultZone: http://localhost:8010/eureka
   
 spring:
-  application:
-    name: check-email-service
+  application: 
+    name: auth-service
   datasource:
     hikari:
       connectionTimeout: 30000
@@ -31,7 +34,10 @@ spring:
     hibernate:
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
-      ddl-auto: none  
+      ddl-auto: none 
+  devtools:
+    restart:
+      trigger-file: /AuthService/src/main/java/com/travelbinge/AuthServiceApplication.java  
       
 logging:
   level:
@@ -39,5 +45,3 @@ logging:
       zaxxer:
         hikari:
           HikariConfig: DEBUG
-
-

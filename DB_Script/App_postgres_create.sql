@@ -7,6 +7,8 @@ CREATE TABLE user_details (
 	Auth_Code character varying(100) NOT NULL,
 	State character varying(100) NOT NULL,
 	Country character varying(100) NOT NULL,
+	is_active bpchar(1) NOT NULL DEFAULT 'N'::bpchar,
+	CONSTRAINT user_details_email_id_key UNIQUE (email_id),
 	CONSTRAINT User_Details_pk PRIMARY KEY (User_Id)
 ) WITH (
   OIDS=FALSE

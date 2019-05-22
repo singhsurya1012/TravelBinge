@@ -16,17 +16,17 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableSwagger2
-public class CheckEmailIdServiceApplication {
+public class AuthServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CheckEmailIdServiceApplication.class, args);
+		SpringApplication.run(AuthServiceApplication.class, args);
 	}
 
 	
 	ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Check If Email Already in use service in Spring-Boot 2")
+		return new ApiInfoBuilder().title("Auth Service in Spring-Boot 2")
 				.description(
-						"REST API for checking If Email Id is already in use or not ")
+						"REST API for Signup and Sign In ")
 				.termsOfServiceUrl("").version("1").contact(new Contact("Surya Singh", "https://github.com/singhsurya1012/TravelBinge", "https://github.com/singhsurya1012")).build();
 	}
 	

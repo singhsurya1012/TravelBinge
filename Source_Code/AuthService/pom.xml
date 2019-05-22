@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.travelbinge</groupId>
-	<artifactId>CheckEmailIdService</artifactId>
+	<artifactId>AuthService</artifactId>
 	<version>1</version>
 	<name>CheckEmailIdService</name>
-	<description>Service to check if Email Id is already used</description>
+	<description>Service to Sign Up and Sign In users</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -50,18 +50,25 @@
 		</dependency>
 
 
-		 <!--SpringFox swagger dependencies -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox-version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${springfox-version}</version>
-        </dependency>
+		<!--SpringFox swagger dependencies -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${springfox-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${springfox-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
