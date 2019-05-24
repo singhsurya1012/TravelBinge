@@ -30,10 +30,16 @@ spring:
     username: surya
     password: Surya123
   jpa:
+    properties:
+      hibernate:
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        temp: 
+          use_jdbc_metadata_defaults: false
     database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    show-sql: true
     hibernate:
       naming:
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       ddl-auto: none 
   devtools:
     restart:

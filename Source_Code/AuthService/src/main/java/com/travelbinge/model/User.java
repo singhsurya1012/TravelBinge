@@ -6,20 +6,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.travelbinge.validator.AuthCodeConstaint;
+import com.travelbinge.validator.PhoneNumberConstraint;
 
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Entity
-@Table(name = "student")
-@Getter @Setter 	
+@Table(name = "user_details")
+@Setter @Getter 
 public class User {
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
@@ -34,36 +39,46 @@ public class User {
 	private String lastName;
 
 	@Column(name = "email_id")
-	@NotNull
+	@NotBlank(message = "Email Id is mandatory")
 	@Email(message = "Email Id should be valid")
-	@Max(value = 100, message = "Email Id should not be greater than 100 characters")
+	@Size(max = 100, message = "Email Id should not be greater than 100 characters")
 	private String emailId;
 
 	@Column(name = "phone_number")
-	@NotNull
-	private int phoneNumber;
+	@PhoneNumberConstraint
+	private long phoneNumber;
 
 	@Column(name = "auth_code")
-	@NotNull
 	private String authCode;
 
 	@Column(name = "state")
-	@NotNull
-	@Max(value = 100, message = "State should not be greater than 100 characters")
+	@NotBlank(message = "State is mandatory")
+	@Size(max = 100, message = "State should not be greater than 100 characters")
 	private String state;
 
 	@Column(name = "country")
-	@NotNull
-	@Max(value = 100, message = "Country should not be greater than 100 characters")
+	@NotBlank(message = "Country is mandatory")
+	@Size(max = 100, message = "Country should not be greater than 100 characters")
 	private String country;
 
 	@Column(name = "is_active")
-	@NotNull
-	private char isActive;
+	private String isActive;
+	
+	@Transient
+	@AuthCodeConstaint
+	private String passCode;
+	
+	@Transient
+	@AuthCodeConstaint
+	private String confirmPassCode;
+	
+	@Transient
+	@AssertTrue(message = "Password Mismatch")
+	private boolean passwordMatch;
+	
+	public void setPasswordMatch(boolean passwordMatch) {
+		this.passwordMatch = (this.passCode.equals(this.confirmPassCode));
+	}
 
-
-
-
-
-
+	
 }

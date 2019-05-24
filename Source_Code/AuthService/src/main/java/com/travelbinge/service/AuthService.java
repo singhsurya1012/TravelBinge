@@ -1,35 +1,71 @@
 package com.travelbinge.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.travelbinge.model.ApiResponse;
+import com.travelbinge.model.User;
 import com.travelbinge.repository.AuthDAO;
 
 @Service
 public class AuthService {
-	
+
 	@Autowired
 	AuthDAO authDAO;
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
-	public Map<String, String> checkEmailId(String emailId) {
-		
-		Map<String, String> response = new HashMap<>();
-		
+	public ApiResponse checkEmailId(String emailId) {
+
+		ApiResponse response = new ApiResponse();
+
 		if(authDAO.emailIdExists(emailId.trim())) {
-			
-			response.put("status", "failure");
-			response.put("message", "Email Id already in use");
-			
+
+			response.setStatus(HttpStatus.IM_USED);
+			response.setMessage("Email Id already in use");
+
 		}else {
+
+			response.setStatus(HttpStatus.OK);
+			response.setMessage("Email Id does not exist");
+		}
+
+		return response;
+	}
+
+	public ApiResponse signUp(User user) {
+		ApiResponse response = new ApiResponse();
+
+		if(authDAO.emailIdExists(user.getEmailId())) {
+
+			response.setStatus(HttpStatus.IM_USED);
+			response.setMessage("Email Id already in use");
+			return response;
+		}
+		
+		//Encoding the password
+		user.setAuthCode(passwordEncoder.encode(user.getPassCode()));
+		user.setIsActive("N");
+		
+		
+		if(authDAO.signup(user)) {
 			
-			response.put("status", "success");
-			response.put("message", "Email Id does not exist");
+			response.setStatus(HttpStatus.CREATED);
+			response.setMessage("User SignUp Successful");
+		}else {
+			response.setStatus(HttpStatus.UNPROCESSABLE_ENTITY);
+			response.setMessage("User SignUp Failed");
 		}
 		
 		return response;
+	}
+
+	public ApiResponse signIn(User user) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

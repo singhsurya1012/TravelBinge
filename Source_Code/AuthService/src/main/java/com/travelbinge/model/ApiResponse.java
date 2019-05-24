@@ -5,7 +5,11 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 
-public class ApiError {
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(value = Include.NON_NULL)
+public class ApiResponse {
 
     private HttpStatus status;
     private String message;
@@ -13,18 +17,18 @@ public class ApiError {
 
     //
 
-    public ApiError() {
+    public ApiResponse() {
         super();
     }
 
-    public ApiError(final HttpStatus status, final String message, final List<String> errors) {
+    public ApiResponse(final HttpStatus status, final String message, final List<String> errors) {
         super();
         this.status = status;
         this.message = message;
         this.errors = errors;
     }
 
-    public ApiError(final HttpStatus status, final String message, final String error) {
+    public ApiResponse(final HttpStatus status, final String message, final String error) {
         super();
         this.status = status;
         this.message = message;

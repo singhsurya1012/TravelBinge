@@ -25,7 +25,7 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.travelbinge.model.ApiError;
+import com.travelbinge.model.ApiResponse;
 
 @ControllerAdvice
 public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -41,7 +41,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 		for (final ObjectError error : ex.getBindingResult().getGlobalErrors()) {
 			errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
 		}
-		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
+		final ApiResponse apiError = new ApiResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), errors);
 		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
 	}
 
@@ -55,7 +55,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 		for (final ObjectError error : ex.getBindingResult().getGlobalErrors()) {
 			errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
 		}
-		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
+		final ApiResponse apiError = new ApiResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), errors);
 		return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
 	}
 
@@ -64,7 +64,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 		//logger.info(ex.getClass().getName());
 		final String error = ex.getValue() + " value for " + ex.getPropertyName() + " should be of type " + ex.getRequiredType();
 
-		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
+		final ApiResponse apiError = new ApiResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), error);
 		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
@@ -72,7 +72,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleMissingServletRequestPart(final MissingServletRequestPartException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
 		//logger.info(ex.getClass().getName());
 		final String error = ex.getRequestPartName() + " part is missing";
-		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
+		final ApiResponse apiError = new ApiResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), error);
 		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
@@ -80,7 +80,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleMissingServletRequestParameter(final MissingServletRequestParameterException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
 		//logger.info(ex.getClass().getName());
 		final String error = ex.getParameterName() + " parameter is missing";
-		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
+		final ApiResponse apiError = new ApiResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), error);
 		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
@@ -91,7 +91,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 		//logger.info(ex.getClass().getName());
 		final String error = ex.getName() + " should be of type " + ex.getRequiredType().getName();
 
-		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), error);
+		final ApiResponse apiError = new ApiResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), error);
 		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
@@ -103,7 +103,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 			errors.add(violation.getRootBeanClass().getName() + " " + violation.getPropertyPath() + ": " + violation.getMessage());
 		}
 
-		final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), errors);
+		final ApiResponse apiError = new ApiResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), errors);
 		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
@@ -113,7 +113,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 		//logger.info(ex.getClass().getName());
 		final String error = "No handler found for " + ex.getHttpMethod() + " " + ex.getRequestURL();
 
-		final ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), error);
+		final ApiResponse apiError = new ApiResponse(HttpStatus.NOT_FOUND, ex.getMessage(), error);
 		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
@@ -126,7 +126,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 		builder.append(" method is not supported for this request. Supported methods are ");
 		ex.getSupportedHttpMethods().forEach(t -> builder.append(t + " "));
 
-		final ApiError apiError = new ApiError(HttpStatus.METHOD_NOT_ALLOWED, ex.getLocalizedMessage(), builder.toString());
+		final ApiResponse apiError = new ApiResponse(HttpStatus.METHOD_NOT_ALLOWED, ex.getMessage(), builder.toString());
 		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
@@ -139,7 +139,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 		builder.append(" media type is not supported. Supported media types are ");
 		ex.getSupportedMediaTypes().forEach(t -> builder.append(t + " "));
 
-		final ApiError apiError = new ApiError(HttpStatus.UNSUPPORTED_MEDIA_TYPE, ex.getLocalizedMessage(), builder.substring(0, builder.length() - 2));
+		final ApiResponse apiError = new ApiResponse(HttpStatus.UNSUPPORTED_MEDIA_TYPE, ex.getMessage(), builder.substring(0, builder.length() - 2));
 		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
@@ -148,7 +148,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<Object> handleAll(final Exception ex, final WebRequest request) {
 		//logger.info(ex.getClass().getName());
 		//logger.error("error", ex);
-		final ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), "error occurred");
+		final ApiResponse apiError = new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), "error occurred");
 		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 
