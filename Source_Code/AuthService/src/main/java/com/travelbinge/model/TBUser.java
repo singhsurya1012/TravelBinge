@@ -10,6 +10,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.travelbinge.validator.AuthCodeConstaint;
@@ -17,18 +18,24 @@ import com.travelbinge.validator.PhoneNumberConstraint;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Entity
 @Table(name = "user_details")
 @Setter @Getter 
-public class User {
+@ToString
+public class TBUser {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private int userId;
+	
+	@Column(name = "username")
+	@Pattern(regexp = "^[A-Za-z0-9_-]*$", message = "Username can contain only alphanumeric character - _")
+	@Size(min = 3, max = 50, message = "Username must be between 5 and 25 characters")
+	private String username;
 
 	@Column(name = "first_name")
 	@Size(min = 3, max = 50, message = "First Name must be between 3 and 50 characters")
@@ -63,22 +70,22 @@ public class User {
 
 	@Column(name = "is_active")
 	private String isActive;
-	
+
 	@Transient
 	@AuthCodeConstaint
 	private String passCode;
-	
+
 	@Transient
 	@AuthCodeConstaint
 	private String confirmPassCode;
-	
+
 	@Transient
 	@AssertTrue(message = "Password Mismatch")
 	private boolean passwordMatch;
-	
+
 	public void setPasswordMatch(boolean passwordMatch) {
 		this.passwordMatch = (this.passCode.equals(this.confirmPassCode));
 	}
 
-	
+
 }

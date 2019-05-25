@@ -2,16 +2,11 @@
 
 server:
   port: 8100
-  servlet:
-    context-path: /travelBinge
-  error: 
-    whitelabel: 
-      enabled: false
-
+  
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8010/eureka
+      defaultZone: http://localhost:8761/eureka/
   
 spring:
   application: 
@@ -43,11 +38,4 @@ spring:
       ddl-auto: none 
   devtools:
     restart:
-      trigger-file: /AuthService/src/main/java/com/travelbinge/AuthServiceApplication.java  
-      
-logging:
-  level:
-    com:
-      zaxxer:
-        hikari:
-          HikariConfig: DEBUG
+      trigger-file: /AuthService/src/main/java/com/travelbinge/AuthServiceApplication.java
