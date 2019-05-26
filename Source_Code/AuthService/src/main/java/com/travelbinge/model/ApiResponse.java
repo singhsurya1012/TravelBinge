@@ -15,7 +15,6 @@ public class ApiResponse {
     private String message;
     private List<String> errors;
 
-    //
 
     public ApiResponse() {
         super();

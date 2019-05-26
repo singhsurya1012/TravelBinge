@@ -7,6 +7,14 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+
+management:
+  security:
+    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: info,health,routes,filters
   
 spring:
   application: 
@@ -39,3 +47,6 @@ spring:
   devtools:
     restart:
       trigger-file: /AuthService/src/main/java/com/travelbinge/AuthServiceApplication.java
+  mvc:
+    servlet:
+      load-on-startup: 1

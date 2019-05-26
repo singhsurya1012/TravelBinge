@@ -12,7 +12,7 @@
 	<groupId>com.travelbinge</groupId>
 	<artifactId>AuthService</artifactId>
 	<version>1</version>
-	<name>CheckEmailIdService</name>
+	<name>AuthService</name>
 	<description>Service to Sign Up and Sign In users</description>
 
 	<properties>

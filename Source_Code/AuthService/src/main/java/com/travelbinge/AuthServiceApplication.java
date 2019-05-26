@@ -51,5 +51,5 @@ public class AuthServiceApplication {
 	public JWTConfig jwtConfig() {
 	    return new JWTConfig();
 	}
-
+	
 }

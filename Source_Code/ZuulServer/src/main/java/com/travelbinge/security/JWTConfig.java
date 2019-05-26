@@ -16,7 +16,7 @@ public class JWTConfig {
 	@Value("${security.jwt.expiration:#{24*60*60}}")
 	private int expiration;
 
-	@Value("${security.jwt.secret:JwtSecretKey}")
+	@Value("${security.jwt.secret:hVB6I2z8zwhV1UQA-ti5Kr3kFOvfI3Tvq3crslh3n08}")
 	private String secret;
 
 	public String getUri() {

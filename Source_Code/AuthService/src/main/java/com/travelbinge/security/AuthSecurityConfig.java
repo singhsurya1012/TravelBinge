@@ -10,8 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.travelbinge.service.AuthService;
 
 @EnableWebSecurity
@@ -24,7 +24,14 @@ public class AuthSecurityConfig extends WebSecurityConfigurerAdapter{
 	private JWTConfig jwtConfig;
 
 	@Autowired
-	PasswordEncoder passwordEncoder;
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private TokenBuilder tokenBuilder;
+	
+	@Autowired
+	private ObjectMapper mapper;;
+	
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -42,7 +49,7 @@ public class AuthSecurityConfig extends WebSecurityConfigurerAdapter{
 		// What's the authenticationManager()? 
 		// An object provided by WebSecurityConfigurerAdapter, used to authenticate the user passing user's credentials
 		// The filter needs this auth manager to authenticate the user.
-		.addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig))	
+		.addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(),jwtConfig,tokenBuilder,mapper))	
 		.authorizeRequests()
 		// allow all POST requests 
 		.antMatchers(HttpMethod.POST, jwtConfig.getUri()).permitAll()
@@ -50,7 +57,9 @@ public class AuthSecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers(HttpMethod.GET,"/actuator/**").permitAll()
 		.antMatchers(HttpMethod.GET,"/swagger-ui.html").permitAll()
 		.antMatchers(HttpMethod.GET,"/swagger/**").permitAll()
+		.antMatchers(HttpMethod.GET,"/swagger-resources/**").permitAll()
 		.antMatchers(HttpMethod.GET,"/webjars/**").permitAll()
+		.antMatchers(HttpMethod.GET,"/v2/**").permitAll()
 		// any other requests must be authenticated
 		.anyRequest().authenticated();
 	}
