@@ -1,7 +1,7 @@
 ---
 
 server:
-  port: 8100
+  port: 8110
   
 eureka:
   client:
@@ -16,7 +16,7 @@ management:
   
 spring:
   application: 
-    name: AUTH-SERVICE
+    name: USER-SERVICE
   datasource:
     hikari:
       connectionTimeout: 30000
@@ -42,9 +42,6 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       ddl-auto: none 
-  devtools:
-    restart:
-      trigger-file: /AuthService/src/main/java/com/travelbinge/AuthServiceApplication.java
   mvc:
     servlet:
       load-on-startup: 1

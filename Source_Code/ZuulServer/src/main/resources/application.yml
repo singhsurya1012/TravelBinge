@@ -11,8 +11,6 @@ eureka:
       default-zone: http://localhost:8761/eureka/
 
 management:
-  security:
-    enabled: false
   endpoints:
     web:
       exposure:
@@ -20,7 +18,7 @@ management:
     
 spring:
   application:
-    name: zuul-gateway-server
+    name: GATEWAY-SERVER
   mvc:
     servlet:
       load-on-startup: 1    
@@ -36,9 +34,8 @@ zuul:
       sensitive-headers: Cookie,Set-Cookie
       service-id: AUTH-SERVICE
       strip-prefix: false
-    gallery-service:
+    user-service:
       path: /user/**
-      sensitive-headers: Cookie,Set-Cookie
       service-id: USER-SERVICE
       strip-prefix: false
 
@@ -46,3 +43,8 @@ ribbon:
   ConnectTimeout: 3000
   ReadTimeout: 60000
   
+logging: 
+  level: 
+    org: 
+      springframework: 
+        security: DEBUG

@@ -1,6 +1,6 @@
 package com.travelbinge.repository;
 
-import java.util.Collections;
+import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -10,6 +10,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -117,8 +119,10 @@ public class AuthDAO {
 
 			TBUser userDetails = (TBUser) query.getSingleResult();
 			
+			List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
+			
 			System.out.println(userDetails.toString());
-			return new User(userDetails.getUsername(), userDetails.getAuthCode(),Collections.emptyList() );
+			return new User(userDetails.getUsername(), userDetails.getAuthCode(), grantedAuthorities);
 			
 		} catch (NoResultException  e) {
 			System.out.println("Username: " + username + " not found");
